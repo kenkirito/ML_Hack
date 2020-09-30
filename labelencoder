@@ -1,0 +1,25 @@
+#data is unavoidably messy in real world.
+#And Pandas is seriously a game changer when it comes to cleaning, transforming, manipulating and analyzing data.
+#In simple terms, Pandas helps to clean the mess.
+import pandas as pd
+dataset = pd.read_csv('D:\dataset\Data.csv')
+
+#as we can see in above data that there is a missing values as nan in age and salary but first we have to seprate depedent 
+#and independent variables
+#so country age and salary are independent variables
+X=dataset.iloc[:,0:3]
+
+#it is a dependent variable
+y=dataset.iloc[:,-1]
+
+#check for whole dataset for one time 
+dataset.isnull().sum()
+#we can use simple imputer method to handle the missing values.
+import numpy as np
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+X.iloc[:,1:3] = imputer.fit_transform(X.iloc[:,1:3])
+from sklearn.preprocessing import LabelEncoder
+Label = LabelEncoder()
+X.iloc[:,0] = Label.fit_transform(X.iloc[:,0])
+X
